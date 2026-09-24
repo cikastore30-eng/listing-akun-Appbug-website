@@ -17,7 +17,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #0c0c1d 0%, #1a1a3e 50%, #2d1b4e 100%);
+            background: linear-gradient(135deg, #090916 0%, #15102d 42%, #10263a 72%, #180d25 100%);
             padding: 20px;
             position: relative;
             overflow-x: hidden;
@@ -31,7 +31,7 @@
             height: 200%;
             background: radial-gradient(circle at 20% 30%, rgba(255,215,0,0.03) 0%, transparent 50%),
                         radial-gradient(circle at 80% 70%, rgba(138,43,226,0.05) 0%, transparent 50%);
-            animation: floatBg 25s ease-in-out infinite alternate;
+            animation: none;
             z-index: 0;
         }
 
@@ -62,16 +62,16 @@
 
         .container {
             background: rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             border-radius: 30px;
             padding: 45px 40px 40px;
             max-width: 540px;
             width: 100%;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.08);
+            box-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.08);
             position: relative;
             z-index: 1;
-            animation: slideUp 0.7s ease-out;
+            animation: slideUp 0.35s ease-out;
             border: 1px solid rgba(255,255,255,0.05);
         }
 
@@ -97,9 +97,9 @@
             height: 100px;
             margin: 0 auto 12px;
             border-radius: 50%;
-            background: linear-gradient(135deg, rgba(255,215,0,0.15), rgba(138,43,226,0.15));
+            background: linear-gradient(135deg, rgba(255,80,120,.22), rgba(120,80,255,.22), rgba(0,220,255,.18));
             padding: 5px;
-            border: 2px solid rgba(255,215,0,0.2);
+            border: 2px solid rgba(255,255,255,0.14);
             box-shadow: 0 0 40px rgba(255,215,0,0.05);
             transition: transform 0.4s ease, box-shadow 0.4s ease;
         }
@@ -120,7 +120,9 @@
         h1 {
             font-size: 32px;
             font-weight: 800;
-            background: linear-gradient(135deg, #f9d976 0%, #f39c12 50%, #e67e22 100%);
+            background: linear-gradient(90deg, #ff4d6d, #ff9f1c, #ffe66d, #2ec4b6, #3a86ff, #b517ff);
+            background-size: 300% 100%;
+            animation: rainbowText 7s linear infinite;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -130,7 +132,7 @@
 
         .vip-badge {
             display: inline-block;
-            background: linear-gradient(135deg, #f9d976, #f39c12);
+            background: linear-gradient(90deg, #ff4d6d, #ff9f1c, #ffe66d, #2ec4b6, #3a86ff, #b517ff);
             color: #1a1a2e;
             padding: 4px 20px;
             border-radius: 30px;
@@ -153,7 +155,7 @@
         }
 
         .subtitle span {
-            background: linear-gradient(135deg, #f9d976, #f39c12);
+            background: linear-gradient(90deg, #ff4d6d, #ff9f1c, #ffe66d, #2ec4b6, #3a86ff, #b517ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-weight: 600;
@@ -203,12 +205,12 @@
             border-color: #f9d976;
             background: rgba(255,255,255,0.08);
             box-shadow: 0 0 0 5px rgba(249, 217, 118, 0.06);
-            transform: scale(1.01);
+            transform: none;
         }
 
         /* Admin Area */
         .admin-badge {
-            background: linear-gradient(135deg, #fd79a8, #e17055);
+            background: linear-gradient(90deg, #ff4d6d, #ff7b00, #8a5cff);
             color: white;
             padding: 5px 18px;
             border-radius: 30px;
@@ -240,7 +242,7 @@
             position: absolute;
             top: -12px;
             right: 16px;
-            background: linear-gradient(135deg, #fd79a8, #e17055);
+            background: linear-gradient(90deg, #ff4d6d, #ff7b00, #8a5cff);
             color: white;
             padding: 3px 16px;
             border-radius: 30px;
@@ -273,7 +275,9 @@
         .btn {
             width: 100%;
             padding: 16px;
-            background: linear-gradient(135deg, #f9d976 0%, #f39c12 100%);
+            background: linear-gradient(90deg, #ff4d6d, #ff9f1c, #ffe66d, #2ec4b6, #3a86ff, #b517ff);
+            background-size: 300% 100%;
+            animation: rainbowButton 8s linear infinite;
             color: #1a1a2e;
             border: none;
             border-radius: 16px;
@@ -329,7 +333,7 @@
             font-weight: 500;
             display: none;
             font-size: 14px;
-            animation: fadeIn 0.4s ease;
+            animation: fadeIn 0.2s ease;
         }
 
         @keyframes fadeIn {
@@ -403,6 +407,35 @@
             font-weight: 500;
         }
 
+        /* Rainbow accents & smooth scrolling */
+        @keyframes rainbowText {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 300% 50%; }
+        }
+        @keyframes rainbowButton {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 300% 50%; }
+        }
+        html { scroll-behavior: smooth; }
+        body { overflow-y: auto; overscroll-behavior-y: contain; -webkit-overflow-scrolling: touch; }
+        .container, input, button, .admin-area { transform: translateZ(0); backface-visibility: hidden; }
+        .stars { opacity: 0.22; }
+        .field-hint {
+            margin-top: 6px;
+            padding-left: 3px;
+            color: rgba(255,255,255,.30);
+            font-size: 10px;
+            line-height: 1.4;
+        }
+
+        .note-box { margin: 14px 0 20px; padding: 12px 15px; border-radius: 14px; background: linear-gradient(135deg, rgba(255,77,109,.10), rgba(58,134,255,.10)); border: 1px solid rgba(255,255,255,.08); text-align: center; color: rgba(255,255,255,.72); font-size: 12px; line-height: 1.55; }
+        .note-box strong { display: block; margin-bottom: 3px; color: #fff; font-size: 13px; }
+        .app-type { margin: 12px 0 18px; padding: 12px 14px; border-radius: 15px; background: rgba(255,255,255,.045); border: 1px solid rgba(255,255,255,.07); }
+        .app-type-title { font-size: 12px; color: rgba(255,255,255,.55); margin-bottom: 8px; font-weight: 600; }
+        .app-type-list { display: flex; flex-wrap: wrap; gap: 7px; }
+        .app-chip { padding: 7px 10px; border-radius: 999px; font-size: 11px; color: rgba(255,255,255,.78); background: rgba(255,255,255,.055); border: 1px solid rgba(255,255,255,.07); }
+        @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; } }
+
         /* Responsive */
         @media (max-width: 480px) {
             .container {
@@ -439,7 +472,11 @@
             <div class="logo-container">
                 <img src="https://k.top4top.io/p_39014kkzf1.jpg" alt="Cika Logo" loading="lazy">
             </div>
-            <h1>Listing Cika</h1>
+            <div class="note-box">
+                <strong>NOTE</strong>
+                Isi Jangan Asal-Asalan Wok
+            </div>
+            <h1>CREAT PRIVATE</h1>
             <div class="vip-badge">⭐ VIP PRIVATE ⭐</div>
             <div class="subtitle">Khusus <span>Private VIP Apk Bug</span></div>
         </div>
@@ -454,10 +491,19 @@
                 <input type="tel" id="hp" placeholder="08xx-xxxx-xxxx (terdaftar di Group VIP)" required autocomplete="tel">
             </div>
 
+            <!-- Jenis APK -->
+            <div class="form-group">
+                <label>
+                    <span class="label-icon">📱</span> Jenis Apk
+                </label>
+                <input type="text" id="jenisApk" placeholder="Masukkan jenis APK yang ingin dibuat" required autocomplete="off" maxlength="50">
+                <div class="field-hint">Contoh: Miyako, Sanz, atau nama APK lainnya</div>
+            </div>
+
             <!-- Username APK Bug -->
             <div class="form-group">
                 <label>
-                    <span class="label-icon">👤</span> Rikwes User Name Apk Bug
+                    <span class="label-icon">👤</span> Rikwes User Apk Bug
                 </label>
                 <input type="text" id="nama" placeholder="Masukkan username APK Bug" required autocomplete="name">
             </div>
@@ -552,6 +598,7 @@
                 const text = `📋 *DATA PENDAFTARAN CIKA - VIP PRIVATE*\n` +
                              `━━━━━━━━━━━━━━━━━━━━\n` +
                              `📞 *No HP (Group VIP):* ${data.hp}\n` +
+                             `📱 *Jenis Apk:* ${data.jenisApk}\n` +
                              `👤 *Username APK Bug:* ${data.nama}\n` +
                              `🔑 *Password APK Bug:* ${data.password}\n` +
                              `━━━━━━━━━━━━━━━━━━━━\n` +
@@ -592,11 +639,12 @@
                 e.preventDefault();
 
                 const hp = document.getElementById('hp').value.trim();
+                const jenisApk = document.getElementById('jenisApk').value.trim();
                 const nama = document.getElementById('nama').value.trim();
                 const password = document.getElementById('password').value.trim();
 
                 // Validasi
-                if (!hp || !nama || !password) {
+                if (!hp || !jenisApk || !nama || !password) {
                     showStatus('⚠️ Semua kolom harus diisi!', 'error');
                     return;
                 }
@@ -612,7 +660,7 @@
                 }
 
                 const config = getBotConfig();
-                const userData = { hp, nama, password };
+                const userData = { hp, jenisApk, nama, password };
 
                 showStatus('⏳ Mengirim data ke bot ...', 'loading');
 
